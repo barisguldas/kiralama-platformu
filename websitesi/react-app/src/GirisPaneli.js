@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import './GirisPaneli.css'; // Bu dosyayı ayrıca oluşturacağız
-import { useNavigate } from 'react-router-dom';
 
-
-const GirisPaneli = () => {
+const GirisPaneli = ({ kayitPaneliYonlendirme }) => {
   const [eposta, setEposta] = useState('');
   const [sifre, setSifre] = useState('');
   const [sifreGoster, setSifreGoster] = useState(false);
@@ -11,12 +9,6 @@ const GirisPaneli = () => {
   const [hataMesaji, setHataMesaji] = useState('');
   const [mesaj, setMesaj] = useState('');
   const [yukleniyor, setYukleniyor] = useState(false);
-
-  const navigate = useNavigate();
-
-  const kayitPaneliYonlendirme = () => {
-    navigate('/kayit'); // /login sayfasına yönlendirme yapıyor
-  };
 
   const girisYap = async (olay) => {
     olay.preventDefault();

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './KayitPaneli.css'; // CSS dosyasının adını da Türkçeleştirdik
-import { useNavigate } from 'react-router-dom';
 
-const KayitPaneli = () => {
+const KayitPaneli = ({ girisPaneliYonlendirme }) => {
   const [formVerisi, setFormVerisi] = useState({
     email: '',
     ad: '',
@@ -18,12 +17,6 @@ const KayitPaneli = () => {
   const [hataMesaji, setHataMesaji] = useState('');
   const [mesaj, setMesaj] = useState('');
   const [yukleniyor, setYukleniyor] = useState(false);
-
-  const navigate = useNavigate();
-
-  const girisPaneliYonlendirme = () => {
-    navigate('/giris'); // /login sayfasına yönlendirme yapıyor
-  };
 
   const degerDegistir = (olay) => {
     const { name, value } = olay.target;
@@ -58,6 +51,7 @@ const KayitPaneli = () => {
       return;
     }
     
+
     try { //SERVER ILE HABERLESME
       const yanit = await fetch('http://localhost:5000/api/kayit', {
         method: 'POST',
