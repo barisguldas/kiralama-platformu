@@ -1,81 +1,6 @@
-import React, { useState } from 'react';
-import './AnaSayfa.css';
+import React, { useState,useEffect } from 'react';
 
-// Örnek veri
-const tumIlanlar = [
-  {
-    id: 1,
-    baslik: "Modern Koltuk Takımı",
-    fiyat: 5500,
-    lokasyon: "İstanbul, Kadıköy",
-    resim: "/api/placeholder/400/300",
-    durum: "Az Kullanılmış",
-    aciklama: "2 yıllık, çok iyi durumda modern koltuk takımı. 3'lü, 2'li ve tekli koltuktan oluşmaktadır.",
-    tarih: "2 gün önce",
-    favoriSayisi: 24,
-    kategori: "Mobilya"
-  },
-  {
-    id: 2,
-    baslik: "Vintage Yemek Masası",
-    fiyat: 3200,
-    lokasyon: "Ankara, Çankaya",
-    resim: "/api/placeholder/400/300",
-    durum: "İkinci El",
-    aciklama: "Ahşap, 6 kişilik vintage yemek masası. Özel dizayn, sağlam meşeden üretilmiştir.",
-    tarih: "5 gün önce",
-    favoriSayisi: 15,
-    kategori: "Mobilya"
-  },
-  {
-    id: 3,
-    baslik: "Çalışma Masası ve Sandalye",
-    fiyat: 1800,
-    lokasyon: "İzmir, Karşıyaka",
-    resim: "/api/placeholder/400/300",
-    durum: "Yeni Gibi",
-    aciklama: "Ev ofis için ideal, ergonomik çalışma masası ve sandalye seti. 1 yıllık, çok az kullanılmış.",
-    tarih: "Dün",
-    favoriSayisi: 8,
-    kategori: "Mobilya"
-  },
-  {
-    id: 4,
-    baslik: "Samsung 55 inç Smart TV",
-    fiyat: 7200,
-    lokasyon: "İstanbul, Beşiktaş",
-    resim: "/api/placeholder/400/300",
-    durum: "Az Kullanılmış",
-    aciklama: "1 yıllık Samsung Smart TV. 4K UHD, HDR destekli, tüm uygulamalar çalışıyor.",
-    tarih: "1 hafta önce",
-    favoriSayisi: 19,
-    kategori: "Elektronik"
-  },
-  {
-    id: 5,
-    baslik: "Bulaşık Makinesi Bosch",
-    fiyat: 4300,
-    lokasyon: "Ankara, Keçiören",
-    resim: "/api/placeholder/400/300",
-    durum: "İkinci El",
-    aciklama: "3 yıllık Bosch marka bulaşık makinesi. A+++ enerji sınıfı, 5 programlı, sorunsuz çalışıyor.",
-    tarih: "3 gün önce",
-    favoriSayisi: 12,
-    kategori: "Beyaz Eşya"
-  },
-  {
-    id: 6,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/api/placeholder/400/300",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }
-];
+import './AnaSayfa.css';
 
 // Kategori listesi
 const kategoriler = [
@@ -96,35 +21,88 @@ const AnaSayfa = () => {
   const [gorunumTipi, setGorunumTipi] = useState('grid');
   const [detayliIlan, setDetayliIlan] = useState(null);
   const [siralama, setSiralama] = useState('en-yeni');
+  const [ilanlar, setIlanlar] = useState([]);
 
-  // Filtreleme ve sıralama fonksiyonu
+
+  useEffect(() => { //başlangıçta ilanları çekebilmek için
+    const fetchIlanlarstart = async () => {
+      try {
+        const params = new URLSearchParams();
+        params.append('limit', '3');
+        const url = `http://localhost:5000/api/ilanlar?${params.toString()}`;
+        const response = await fetch(url, {
+          headers: {
+            'Accept': 'application/json; charset=utf-8',
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('API yanıtı başarısız oldu');
+        }
+        
+        // Debug için yanıtın ham metnini kontrol edin
+        const rawText = await response.text();
+        console.log('Ham API yanıtı:', rawText);
+        
+        // Metni JSON'a dönüştürün
+        const data = JSON.parse(rawText);
+        console.log('Dönüştürülen veri:', data);
+        
+        setIlanlar(data);
+      } catch (error) {
+        console.error('Veri alınırken bir hata oluştu', error);
+      }
+    };
+    fetchIlanlarstart();
+  }, []);
+
+
+const fetchIlanlar = async () => {
+  try {
+    // Query parametrelerini oluştur
+    const params = new URLSearchParams();
+    if (aramaMetni) {
+      params.append('arama', aramaMetni);
+    }
+    if (seciliKategori && seciliKategori !== 'Tüm Kategoriler') {
+      params.append('kategori', seciliKategori);
+    }
+    if (siralama) {
+      params.append('siralama', siralama);
+    }
+    const url = `http://localhost:5000/api/ilanlar?${params.toString()}`;
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('API yanıtı başarısız oldu');
+    }
+    const data = await response.json();
+    setIlanlar(data);
+  } catch (error) {
+    console.error('Veri alınırken bir hata oluştu', error);
+  }
+};
+
   const filtreliVeSiraliIlanlar = () => {
-    // Önce filtreleme yap
-    let sonuclar = tumIlanlar.filter(ilan => {
-      // Metin araması kontrolü
+    let sonuclar = ilanlar.filter((ilan) => {
       const metinUyumu = ilan.baslik.toLowerCase().includes(aramaMetni.toLowerCase());
-      
-      // Kategori kontrolü
       const kategoriUyumu = seciliKategori === 'Tüm Kategoriler' || ilan.kategori === seciliKategori;
-      
       return metinUyumu && kategoriUyumu;
     });
-    
-    // Sonra sıralama yap
+
     if (siralama === 'fiyat-artan') {
       sonuclar.sort((a, b) => a.fiyat - b.fiyat);
     } else if (siralama === 'fiyat-azalan') {
       sonuclar.sort((a, b) => b.fiyat - a.fiyat);
     } else if (siralama === 'en-yeni') {
-      // Tarih tabanlı sıralama yapabiliriz, ama örnek veri için sabit tutalım
-      // Gerçek bir uygulamada tarih string'i yerine timestamp kullanılmalıdır
-      sonuclar = [...sonuclar]; // Varsayılan sıralama
+      // Tarih sıralaması backend tarafından yapılıyorsa bu kısım opsiyoneldir
+      sonuclar.sort((a, b) => new Date(b.tarih) - new Date(a.tarih));
     }
-    
+
     return sonuclar;
   };
 
-  // Filtrelenmiş ve sıralanmış ilanları al
   const sonucIlanlar = filtreliVeSiraliIlanlar();
 
   // Detaylı ilan görüntüleme
@@ -153,6 +131,10 @@ const AnaSayfa = () => {
         <h1>İkinci El Eşya İlanları</h1>
         <p>İhtiyacınız olan eşyaları bulun veya kullanmadıklarınızı satın</p>
       </header>
+
+      <button className="filter-button" onClick={fetchIlanlar}>
+          Filtrele AÇIK
+        </button>
 
       {/* Arama ve Filtreleme */}
       <div className="search-filter-container">
