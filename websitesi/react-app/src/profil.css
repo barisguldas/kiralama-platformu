@@ -1,0 +1,306 @@
+/* ProfilSayfasi.css */
+/* Bu dosya, profil sayfasının görsel stilini tanımlar */
+
+/* Genel Stil Ayarları */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+}
+
+.profil-sayfasi {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Başlık Bölümü Stilleri */
+.profil-baslik {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #666;
+    color: white;
+    border-bottom: 5px solid #a037a0;
+}
+
+.profil-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+}
+
+.profil-avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+}
+
+.profil-avatar h3 {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.profil-sekmeler {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    gap: 10px;
+    background-color: #a037a0;
+    padding: 15px;
+    margin: 0 20px;
+}
+
+.sekme-buton {
+    background: none;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.sekme-buton.aktif, .sekme-buton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.mesaj-buton button {
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.mesaj-buton button:hover {
+    background-color: #e03b75;
+}
+
+/* Ana İçerik Bölümü Stilleri */
+.profil-icerik {
+    padding: 30px 20px;
+    min-height: 400px;
+}
+
+.icerik-alani {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.icerik-alani h3 {
+    color: #a037a0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* İlan Listesi Stilleri */
+.ilan-kutusu {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.ilan-kutusu:last-child {
+    border-bottom: none;
+}
+
+.ilan-gorsel img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ilan-detaylari {
+    margin-left: 20px;
+    flex: 1;
+}
+
+.ilan-detaylari h4 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.ilan-detaylari p {
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.fiyat {
+    font-weight: bold;
+    color: #a037a0;
+    font-size: 18px;
+}
+
+/* Sayfalama Stilleri */
+.sayfalama {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 20px;
+}
+
+.sayfalama span {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.sayfa-numaralari {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sayfa-numaralari a {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.sayfa-numaralari a:hover {
+    background-color: #f0f0f0;
+}
+
+.sayfa-numaralari a.aktif {
+    background-color: #a037a0;
+    color: white;
+    border-color: #a037a0;
+}
+
+/* Yorum Listesi Stilleri */
+.yorum-kutusu {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.yorum-kutusu:last-child {
+    border-bottom: none;
+}
+
+.yorum-baslik {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.yorum-kullanici {
+    font-weight: bold;
+    color: #333;
+}
+
+.yorum-tarih {
+    color: #999;
+    font-size: 14px;
+}
+
+.yorum-icerik {
+    color: #555;
+    line-height: 1.5;
+}
+
+.yorumlar-alt {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 14px;
+    color: #666;
+}
+
+/* İletişim Bilgileri Stilleri */
+.iletisim-bilgileri p {
+    margin: 10px 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+.iletisim-bilgileri strong {
+    color: #333;
+    min-width: 100px;
+    display: inline-block;
+}
+
+/* Alt Bilgi Bölümü Stilleri */
+.profil-altbilgi {
+    background-color: #a037a0;
+    color: white;
+    padding: 15px 20px;
+}
+
+.altbilgi-icerik {
+    display: flex;
+    align-items: center;
+}
+
+.kullanici-bilgi {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.kucuk-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid white;
+}
+
+.altbilgi-metin {
+    flex: 1;
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+    .profil-baslik {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .profil-sekmeler {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .ilan-kutusu {
+        flex-direction: column;
+    }
+    
+    .ilan-gorsel img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+    
+    .ilan-detaylari {
+        margin-left: 0;
+    }
+}
