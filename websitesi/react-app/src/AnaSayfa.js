@@ -1,202 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './AnaSayfa.css';
 import UstCubuk from './UstCubuk';
-
-// Örnek veri
-const tumIlanlar = [
-  {
-    id: 1,
-    baslik: "Modern Koltuk Takımı",
-    fiyat: 5500,
-    lokasyon: "İstanbul, Kadıköy",
-    resim: "/koltuk.webp", // Resim yolları başında "/" olan URL'ler olarak tanımlanmış
-    durum: "Az Kullanılmış",
-    aciklama: "2 yıllık, çok iyi durumda modern koltuk takımı. 3'lü, 2'li ve tekli koltuktan oluşmaktadır.",
-    tarih: "2 gün önce",
-    favoriSayisi: 24,
-    kategori: "Mobilya"
-  },
-  {
-    id: 2,
-    baslik: "Vintage Yemek Masası",
-    fiyat: 3200,
-    lokasyon: "Ankara, Çankaya",
-    resim: "/vintage_yemek_masası.webp",
-    durum: "İkinci El",
-    aciklama: "Ahşap, 6 kişilik vintage yemek masası. Özel dizayn, sağlam meşeden üretilmiştir.",
-    tarih: "5 gün önce",
-    favoriSayisi: 15,
-    kategori: "Mobilya"
-  },
-  {
-    id: 3,
-    baslik: "Çalışma Masası ve Sandalye",
-    fiyat: 1800,
-    lokasyon: "İzmir, Karşıyaka",
-    resim: "/calisma_masasi.jpg",
-    durum: "Yeni Gibi",
-    aciklama: "Ev ofis için ideal, ergonomik çalışma masası ve sandalye seti. 1 yıllık, çok az kullanılmış.",
-    tarih: "Dün",
-    favoriSayisi: 8,
-    kategori: "Mobilya"
-  },
-  {
-    id: 4,
-    baslik: "Samsung 55 inç Smart TV",
-    fiyat: 7200,
-    lokasyon: "İstanbul, Beşiktaş",
-    resim: "/smart_tv.jpg",
-    durum: "Az Kullanılmış",
-    aciklama: "1 yıllık Samsung Smart TV. 4K UHD, HDR destekli, tüm uygulamalar çalışıyor.",
-    tarih: "1 hafta önce",
-    favoriSayisi: 19,
-    kategori: "Elektronik"
-  },
-  {
-    id: 5,
-    baslik: "Bulaşık Makinesi Bosch",
-    fiyat: 4300,
-    lokasyon: "Ankara, Keçiören",
-    resim: "/bulasik.jpg",
-    durum: "İkinci El",
-    aciklama: "3 yıllık Bosch marka bulaşık makinesi. A+++ enerji sınıfı, 5 programlı, sorunsuz çalışıyor.",
-    tarih: "3 gün önce",
-    favoriSayisi: 12,
-    kategori: "Beyaz Eşya"
-  },
-  {
-    id: 6,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 7,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 8,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 9,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 10,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 11,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 12,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 13,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 14,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 15,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-  {
-    id: 16,
-    baslik: "IKEA Yatak ve Baza",
-    fiyat: 2600,
-    lokasyon: "İzmir, Bornova",
-    resim: "/yatak.webp",
-    durum: "İkinci El",
-    aciklama: "IKEA'dan alınma çift kişilik yatak ve baza. 4 yıllık fakat temiz ve bakımlı.",
-    tarih: "2 hafta önce",
-    favoriSayisi: 5,
-    kategori: "Mobilya"
-  }, 
-];
 
 const placeholderImage = "https://via.placeholder.com/300x200?text=Ürün+Görseli";
 
@@ -224,26 +28,50 @@ const kategoriIkonlari = {
   "Diğer": "📦"
 };
 
-const kategoriSayilari = kategoriler.reduce((acc, kategori) => {
-  if (kategori === "Tüm Kategoriler") {
-    acc[kategori] = tumIlanlar.length;
-  } else {
-    acc[kategori] = tumIlanlar.filter(ilan => ilan.kategori === kategori).length;
-  }
-  return acc;
-}, {});
-
+//-----------------------JAVASCIPT KODLARI BASLANGIC---------------------------------------------------------------------------------------------------------
 const AnaSayfa = () => {
-  const [aramaMetni, setAramaMetni] = useState('');
-  const [seciliKategori, setSeciliKategori] = useState('Tüm Kategoriler');
-  const [gorunumTipi, setGorunumTipi] = useState('grid'); 
-  const [detayliIlan, setDetayliIlan] = useState(null);
-  const [siralama, setSiralama] = useState('en-yeni');
-  const [sidebarAcik, setSidebarAcik] = useState(true);
-  
-  // Sayfalama için state'ler
+  const [_ARAMAMETNI, fAramaMetni] = useState('');
+  const [_SECILIKATEGORI, fSeciliKategori] = useState('Tüm Kategoriler');
+  const [_GORUNUMTIPI, fGorunumTipi] = useState('grid'); // artık tüm görünümler yatay
+  const [_DETAYLIILAN, fDetayliIlan] = useState(null);
+  const [_SIRALAMA, fSiralama] = useState('en-yeni');
+  const [_SIDEBARACIK, fSideBarAcik] = useState(true); // Mobil görünümde sidebar durumu
+  const [_ILANLAR, fIlanlar] = useState([]);
   const [sayfaBasiIlanSayisi, setSayfaBasiIlanSayisi] = useState(20);
   const [aktifSayfa, setAktifSayfa] = useState(1);
+
+
+//------------Başlangıçta ilanları çekebilmek için (Backend)---------
+  useEffect(() => { 
+      const ilanlari_cek = async () => {
+        try {
+          const params = new URLSearchParams();
+          params.append('limit', '10');
+          const url = `http://localhost:5000/api/ilanlar?${params.toString()}`;
+          const response = await fetch(url, {
+            headers: {
+              'Accept': 'application/json; charset=utf-8',
+              'Content-Type': 'application/json; charset=utf-8'
+            }
+          });
+          
+          if (!response.ok) {
+            throw new Error('API yanıtı başarısız oldu');
+          }
+          
+          const rawText = await response.text();
+          console.log('Ham API yanıtı:', rawText);
+          
+          const data = JSON.parse(rawText);
+          console.log('Dönüştürülen veri:', data);
+          
+          fIlanlar(data);
+        } catch (error) {
+          console.error('Veri alınırken bir hata oluştu', error);
+        }
+      };
+      ilanlari_cek();
+    }, []);
 
   const getImageUrl = (resimYolu) => {
     if (!resimYolu) {
@@ -252,57 +80,66 @@ const AnaSayfa = () => {
     return resimYolu;
   };
 
-  const filtreliVeSiraliIlanlar = () => {
-    let sonuclar = tumIlanlar.filter(ilan => {
-      const metinUyumu = ilan.baslik.toLowerCase().includes(aramaMetni.toLowerCase());
-      const kategoriUyumu = seciliKategori === 'Tüm Kategoriler' || ilan.kategori === seciliKategori;
+  const filtreliVeSirali_ILANLAR = () => {
+    let sonuclar = _ILANLAR.filter(ilan => {
+      const metinUyumu = ilan.baslik.toLowerCase().includes(_ARAMAMETNI.toLowerCase());
+      const kategoriUyumu = _SECILIKATEGORI === 'Tüm Kategoriler' || ilan.kategori === _SECILIKATEGORI;
       return metinUyumu && kategoriUyumu;
     });
 
-    if (siralama === 'fiyat-artan') {
+    if (_SIRALAMA === 'fiyat-artan') {
       sonuclar.sort((a, b) => a.fiyat - b.fiyat);
-    } else if (siralama === 'fiyat-azalan') {
+    } else if (_SIRALAMA === 'fiyat-azalan') {
       sonuclar.sort((a, b) => b.fiyat - a.fiyat);
     }
 
     return sonuclar;
   };
 
-  // Tüm filtrelenmiş ve sıralanmış ilanları al
-  const tumFiltreliIlanlar = filtreliVeSiraliIlanlar();
+  // Tüm filtrelenmiş ve sıralanmış _ILANLARı al
+  const tumFiltreli_ILANLAR = filtreliVeSirali_ILANLAR();
   
   // Toplam sayfa sayısını hesapla
-  const toplamSayfaSayisi = Math.ceil(tumFiltreliIlanlar.length / sayfaBasiIlanSayisi);
+  const toplamSayfaSayisi = Math.ceil(tumFiltreli_ILANLAR.length / sayfaBasiIlanSayisi);
   
-  // Mevcut sayfa için ilanları al (pagination)
-  const mevcutSayfaIlanlari = tumFiltreliIlanlar.slice(
+  // Mevcut sayfa için _ILANLARı al (pagination)
+  const mevcutSayfa_ILANLARi = tumFiltreli_ILANLAR.slice(
     (aktifSayfa - 1) * sayfaBasiIlanSayisi,
     aktifSayfa * sayfaBasiIlanSayisi
   );
 
+  const kategoriSayilari = kategoriler.reduce((acc, kategori) => {
+    if (kategori === "Tüm Kategoriler") {
+      acc[kategori] = _ILANLAR.length;
+    } else {
+      acc[kategori] = _ILANLAR.filter(ilan => ilan.kategori === kategori).length;
+    }
+    return acc;
+  }, {});
+  
   const ilanDetayiniGoster = (ilan) => {
-    setDetayliIlan(ilan);
+    fDetayliIlan(ilan);
   };
 
   const ilanDetayiniKapat = () => {
-    setDetayliIlan(null);
+    fDetayliIlan(null);
   };
 
-  const siralamaDeğiştir = (e) => {
-    setSiralama(e.target.value);
+  const _SIRALAMADeğiştir = (e) => {
+    fSiralama(e.target.value);
   };
 
   const kategoriDegistir = (yeniKategori) => {
-    setSeciliKategori(yeniKategori);
+    fSeciliKategori(yeniKategori);
     setAktifSayfa(1); // Kategori değiştiğinde ilk sayfaya dön
   };
 
   const toggleSidebar = () => {
-    setSidebarAcik(!sidebarAcik);
+    fSideBarAcik(!_SIDEBARACIK);
   };
 
   const handleAramaChange = (event) => {
-    setAramaMetni(event.target.value);
+    fAramaMetni(event.target.value);
     setAktifSayfa(1); // Arama kriteri değiştiğinde ilk sayfaya dön
   };
 
@@ -375,18 +212,20 @@ const AnaSayfa = () => {
     
     return sayfaNumaralari;
   };
+//-----------------------JAVASCIPT KODLARI BİTİŞ----------------------------------------------------------------------------------------------------
 
+//-----------------------JSX BLOGU BASLANGIC--------------------------------------------------------------------------------------------------------
   return (
     <>
-      <UstCubuk aramaMetni={aramaMetni} onAramaChange={handleAramaChange} />
+      <UstCubuk _ARAMAMETNI={_ARAMAMETNI} onAramaChange={handleAramaChange} />
       <div className="page-wrapper">
-        <aside className={`kategori-sidebar ${sidebarAcik ? 'acik' : ''}`}>
+        <aside className={`kategori-sidebar ${_SIDEBARACIK ? 'acik' : ''}`}>
           <h2 className="sidebar-baslik">Kategoriler</h2>
           <ul className="kategori-listesi">
             {kategoriler.map((kategori) => (
               <li 
                 key={kategori} 
-                className={`kategori-item ${seciliKategori === kategori ? 'aktif' : ''}`}
+                className={`kategori-item ${_SECILIKATEGORI === kategori ? 'aktif' : ''}`}
                 onClick={() => kategoriDegistir(kategori)}
               >
                 <span className="kategori-icon">{kategoriIkonlari[kategori]}</span>
@@ -404,19 +243,19 @@ const AnaSayfa = () => {
           </header>
 
           <button className="mobil-menu-btn" onClick={toggleSidebar}>
-            {sidebarAcik ? '✕' : '☰'} Kategoriler
+            {_SIDEBARACIK ? '✕' : '☰'} Kategoriler
           </button>
 
           <div className="results-sort-view">
             <div className="results-sort">
-              <p className="results-count">{tumFiltreliIlanlar.length} ilan bulundu</p>
+              <p className="results-count">{tumFiltreli_ILANLAR.length} ilan bulundu</p>
               <div className="sort-container">
                 <span className="sort-icon">↕️</span>
                 <span className="sort-label">Sırala:</span>
                 <select 
                   className="sort-select"
-                  value={siralama}
-                  onChange={siralamaDeğiştir}
+                  value={_SIRALAMA}
+                  onChange={_SIRALAMADeğiştir}
                 >
                   <option value="en-yeni">En Yeniler</option>
                   <option value="fiyat-artan">Fiyat (Artan)</option>
@@ -426,23 +265,23 @@ const AnaSayfa = () => {
             </div>
             <div className="view-options">
               <button
-                className={`view-button ${gorunumTipi === 'grid' ? 'active' : ''}`}
-                onClick={() => setGorunumTipi('grid')}
+                className={`view-button ${_GORUNUMTIPI === 'grid' ? 'active' : ''}`}
+                onClick={() => fGorunumTipi('grid')}
               >
                 □
               </button>
               <button
-                className={`view-button ${gorunumTipi === 'list' ? 'active' : ''}`}
-                onClick={() => setGorunumTipi('list')}
+                className={`view-button ${_GORUNUMTIPI === 'list' ? 'active' : ''}`}
+                onClick={() => fGorunumTipi('list')}
               >
                 ≡
               </button>
             </div>
           </div>
 
-          <div className={`ilan-listesi ${gorunumTipi}`}>
-            {mevcutSayfaIlanlari.length > 0 ? (
-              mevcutSayfaIlanlari.map(ilan => (
+          <div className={`ilan-listesi ${_GORUNUMTIPI}`}>
+            {mevcutSayfa_ILANLARi.length > 0 ? (
+              mevcutSayfa_ILANLARi.map(ilan => (
                 <div 
                   key={ilan.id} 
                   className="ilan-karti-yatay"
@@ -484,7 +323,7 @@ const AnaSayfa = () => {
             ) : (
               <div className="no-results">
                 <p>Aramanızla eşleşen ilan bulunamadı.</p>
-                <button onClick={() => {setAramaMetni(''); setSeciliKategori('Tüm Kategoriler');}}>
+                <button onClick={() => {fAramaMetni(''); fSeciliKategori('Tüm Kategoriler');}}>
                   Filtreleri Temizle
                 </button>
               </div>
@@ -492,11 +331,11 @@ const AnaSayfa = () => {
           </div>
           
           {/* Sayfalama bileşeni */}
-          {tumFiltreliIlanlar.length > 0 && (
+          {tumFiltreli_ILANLAR.length > 0 && (
             <div className="sayfalama-container">
               <div className="sayfalama-bilgi">
-                Toplam {tumFiltreliIlanlar.length} ilandan {(aktifSayfa - 1) * sayfaBasiIlanSayisi + 1}-
-                {Math.min(aktifSayfa * sayfaBasiIlanSayisi, tumFiltreliIlanlar.length)} arası gösteriliyor
+                Toplam {tumFiltreli_ILANLAR.length} ilandan {(aktifSayfa - 1) * sayfaBasiIlanSayisi + 1}-
+                {Math.min(aktifSayfa * sayfaBasiIlanSayisi, tumFiltreli_ILANLAR.length)} arası gösteriliyor
               </div>
               <div className="sayfalama-kontroller">
                 <button 
@@ -539,11 +378,11 @@ const AnaSayfa = () => {
           )}
         </div>
 
-        {detayliIlan && (
+        {_DETAYLIILAN && (
           <div className="modal-arkaplan">
             <div className="modal-icerik">
               <div className="modal-header">
-                <h2 className="modal-baslik">{detayliIlan.baslik}</h2>
+                <h2 className="modal-baslik">{_DETAYLIILAN.baslik}</h2>
                 <button 
                   className="modal-kapat"
                   onClick={ilanDetayiniKapat}
@@ -552,31 +391,31 @@ const AnaSayfa = () => {
                 </button>
               </div>
               <img 
-                src={getImageUrl(detayliIlan.resim)} 
-                alt={detayliIlan.baslik} 
+                src={getImageUrl(_DETAYLIILAN.resim)} 
+                alt={_DETAYLIILAN.baslik} 
                 className="modal-resim" 
               />
               <div className="modal-fiyat-tarih">
-                <span className="modal-fiyat">{detayliIlan.fiyat} TL</span>
-                <span className="modal-tarih">{detayliIlan.tarih}</span>
+                <span className="modal-fiyat">{_DETAYLIILAN.fiyat} TL</span>
+                <span className="modal-tarih">{_DETAYLIILAN.tarih}</span>
               </div>
               <div className="modal-detaylar">
                 <div className="modal-detay">
                   <h3 className="detay-baslik">Konum</h3>
-                  <p className="detay-icerik">{detayliIlan.lokasyon}</p>
+                  <p className="detay-icerik">{_DETAYLIILAN.lokasyon}</p>
                 </div>
                 <div className="modal-detay">
                   <h3 className="detay-baslik">Durum</h3>
-                  <p className="detay-icerik">{detayliIlan.durum}</p>
+                  <p className="detay-icerik">{_DETAYLIILAN.durum}</p>
                 </div>
                 <div className="modal-detay">
                   <h3 className="detay-baslik">Kategori</h3>
-                  <p className="detay-icerik">{detayliIlan.kategori}</p>
+                  <p className="detay-icerik">{_DETAYLIILAN.kategori}</p>
                 </div>
               </div>
               <div className="modal-aciklama">
                 <h3 className="detay-baslik">Açıklama</h3>
-                <p className="detay-icerik">{detayliIlan.aciklama}</p>
+                <p className="detay-icerik">{_DETAYLIILAN.aciklama}</p>
               </div>
               <div className="modal-butonlar">
                 <button className="favori-buton">
@@ -593,5 +432,5 @@ const AnaSayfa = () => {
     </>
   );
 };
-
+//-----------------------JSX BLOGU BITIS------------------------------------------------------------------------------------------------------------
 export default AnaSayfa;
