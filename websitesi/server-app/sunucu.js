@@ -135,6 +135,38 @@ app.get('/api/ilanlar', async (req, res) => {
   }
 });
 
+app.post('/api/ilanolustur', async (req, res) => {
+  const { baslik, fiyat,konum,resim,durum,aciklama,tarih} = req.body;
+  console.log('Baslik:', baslik);
+  console.log('Fiyat:', fiyat);
+  console.log('Konum:', konum);
+  console.log('Resim:', resim);
+  console.log('Durum:', durum);
+  console.log('Aciklama:', aciklama);
+  console.log('Tarih:', tarih);
+  
+  try {
+    const result = await pool2.query(
+      'INSERT INTO ilanlar (baslik, fiyat, lokasyon, resim, durum, aciklama, tarih,sahipid) VALUES ($1, $2, $3, $4, $5, $6, $7,4)',
+      [baslik, fiyat,konum,resim,durum,aciklama,tarih]
+    );
+    
+    // Ekleme başarılı olduysa, 200 döndür
+    res.status(200).json({ message: 'İlan başarıyla oluşturuldu' });
+  
+  } catch (error) {
+    console.error(error);
+  
+    // Eğer hata UNIQUE kısıtlaması ile ilgiliyse (email ya da telefon numarası çakışması)
+    if (error.code === '23505') { // 23505 PostgreSQL hata kodu, unique constraint ihlali
+      res.status(401).json({ message: 'Email veya telefon numarası zaten mevcut!' });
+    } else {
+      // Diğer sunucu hataları için
+      res.status(500).json({ message: 'Sunucu hatası!' });
+    }
+  }
+});
+
 
 app.listen(port,() => {
   console.log(`Server running at http://localhost:${port}`);
