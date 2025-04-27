@@ -88,8 +88,8 @@ app.post('/api/kayit', async (req, res) => {
 });
 
 app.get('/api/ilanlar', async (req, res) => {
-  let { arama, kategori, siralama,limit } = req.query;
-
+  let { arama, kategori, siralama,limit,ilanid } = req.query;
+  
   let query = 'SELECT * FROM ilanlar';
   let values = [];
   let conditions = [];
@@ -98,6 +98,11 @@ app.get('/api/ilanlar', async (req, res) => {
   if (arama) {
     conditions.push(`baslik ILIKE $${values.length + 1}`);
     values.push(`%${arama}%`);
+  }
+
+  if (ilanid) {
+    conditions.push(`ilanid = $${values.length + 1}`);
+    values.push(ilanid);
   }
 
   // Kategori filtresi
@@ -132,6 +137,38 @@ app.get('/api/ilanlar', async (req, res) => {
   } catch (error) {
     console.error('Veri çekilirken hata oluştu:', error);
     res.status(500).json({ error: 'Veri çekilirken hata oluştu' });
+  }
+});
+
+app.post('/api/ilanolustur', async (req, res) => {
+  const { baslik, fiyat,konum,resim,durum,aciklama,tarih} = req.body;
+  console.log('Baslik:', baslik);
+  console.log('Fiyat:', fiyat);
+  console.log('Konum:', konum);
+  console.log('Resim:', resim);
+  console.log('Durum:', durum);
+  console.log('Aciklama:', aciklama);
+  console.log('Tarih:', tarih);
+  
+  try {
+    const result = await pool2.query(
+      'INSERT INTO ilanlar (baslik, fiyat, lokasyon, resim, durum, aciklama, tarih,sahipid) VALUES ($1, $2, $3, $4, $5, $6, $7,4)',
+      [baslik, fiyat,konum,resim,durum,aciklama,tarih]
+    );
+    
+    // Ekleme başarılı olduysa, 200 döndür
+    res.status(200).json({ message: 'İlan başarıyla oluşturuldu' });
+  
+  } catch (error) {
+    console.error(error);
+  
+    // Eğer hata UNIQUE kısıtlaması ile ilgiliyse (email ya da telefon numarası çakışması)
+    if (error.code === '23505') { // 23505 PostgreSQL hata kodu, unique constraint ihlali
+      res.status(401).json({ message: 'Email veya telefon numarası zaten mevcut!' });
+    } else {
+      // Diğer sunucu hataları için
+      res.status(500).json({ message: 'Sunucu hatası!' });
+    }
   }
 });
 

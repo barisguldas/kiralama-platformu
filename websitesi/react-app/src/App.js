@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import AnaSayfa from './AnaSayfa';
 import GirisPaneli from './GirisPaneli';
 import KayitPaneli from './KayitPaneli';
+import IlanOlusturma from './ilanolusturma';
+
+import IlanArayuzu from './IlanArayuzu';
 
 function App() {
   return (
@@ -13,6 +16,8 @@ function App() {
         <Route path="/anasayfa" element={<AnaSayfa />} />
         <Route path="/giris" element={<GirisPaneli />} />
         <Route path="/kayit" element={<KayitPaneli />} />
+        <Route path="/ilanolustur" element={<IlanOlusturma/>} />
+        <Route path="/ilanlar/:ilanid/:baslik" element={<IlanArayuzu />} />
       </Routes>
     </Router>
   );
