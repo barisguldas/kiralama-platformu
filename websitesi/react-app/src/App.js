@@ -5,6 +5,8 @@ import GirisPaneli from './GirisPaneli';
 import KayitPaneli from './KayitPaneli';
 import IlanOlusturma from './ilanolusturma';
 
+import IlanArayuzu from './IlanArayuzu';
+
 function App() {
   return (
     <Router>
@@ -15,6 +17,7 @@ function App() {
         <Route path="/giris" element={<GirisPaneli />} />
         <Route path="/kayit" element={<KayitPaneli />} />
         <Route path="/ilanolustur" element={<IlanOlusturma/>} />
+        <Route path="/ilanlar/:ilanid/:baslik" element={<IlanArayuzu />} />
       </Routes>
     </Router>
   );

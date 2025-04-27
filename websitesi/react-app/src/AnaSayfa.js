@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import './AnaSayfa.css';
 import UstCubuk from './UstCubuk';
+import { Link } from 'react-router-dom';
 
 const placeholderImage = "https://via.placeholder.com/300x200?text=Ürün+Görseli";
 
@@ -217,6 +218,17 @@ const AnaSayfa = () => {
 //-----------------------JSX BLOGU BASLANGIC--------------------------------------------------------------------------------------------------------
   return (
     <>
+     <div>
+      <h1>İlanlar</h1>
+      <ul>
+        {mevcutSayfa_ILANLARi.map((ilan) => (
+          <li key={ilan.ilanid}>
+            <Link to={`/ilanlar/${ilan.ilanid}/${ilan.baslik}`}>{ilan.baslik}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+
       <UstCubuk _ARAMAMETNI={_ARAMAMETNI} onAramaChange={handleAramaChange} />
       <div className="page-wrapper">
         <aside className={`kategori-sidebar ${_SIDEBARACIK ? 'acik' : ''}`}>
@@ -283,7 +295,7 @@ const AnaSayfa = () => {
             {mevcutSayfa_ILANLARi.length > 0 ? (
               mevcutSayfa_ILANLARi.map(ilan => (
                 <div 
-                  key={ilan.id} 
+                  key={ilan.ilanid} 
                   className="ilan-karti-yatay"
                   onClick={() => ilanDetayiniGoster(ilan)}
                 >
