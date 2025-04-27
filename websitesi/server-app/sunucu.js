@@ -88,8 +88,8 @@ app.post('/api/kayit', async (req, res) => {
 });
 
 app.get('/api/ilanlar', async (req, res) => {
-  let { arama, kategori, siralama,limit } = req.query;
-
+  let { arama, kategori, siralama,limit,ilanid } = req.query;
+  
   let query = 'SELECT * FROM ilanlar';
   let values = [];
   let conditions = [];
@@ -98,6 +98,11 @@ app.get('/api/ilanlar', async (req, res) => {
   if (arama) {
     conditions.push(`baslik ILIKE $${values.length + 1}`);
     values.push(`%${arama}%`);
+  }
+
+  if (ilanid) {
+    conditions.push(`ilanid = $${values.length + 1}`);
+    values.push(ilanid);
   }
 
   // Kategori filtresi
