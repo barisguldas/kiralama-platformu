@@ -223,7 +223,7 @@ const AnaSayfa = () => {
       <ul>
         {mevcutSayfa_ILANLARi.map((ilan) => (
           <li key={ilan.ilanid}>
-            <Link to={`/ilanlar/${ilan.ilanid}/${ilan.baslik}`}>{ilan.baslik}</Link>
+            <Link to={`/ilanlar/${ilan.ilanid}/${encodeURIComponent(ilan.baslik)}`}>{ilan.baslik}</Link>
           </li>
         ))}
       </ul>
@@ -327,7 +327,9 @@ const AnaSayfa = () => {
                         <span className="favori-ikon">♥</span>
                         <span className="favori-sayi">{ilan.favoriSayisi}</span>
                       </div>
-                      <button className="ilan-incele-btn">İlanı İncele</button>
+                      <Link to={`/ilanlar/${ilan.ilanid}/${encodeURIComponent(ilan.baslik)}`} className="ilan-incele-btn">
+                        İlanı İncele
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -390,56 +392,7 @@ const AnaSayfa = () => {
           )}
         </div>
 
-        {_DETAYLIILAN && (
-          <div className="modal-arkaplan">
-            <div className="modal-icerik">
-              <div className="modal-header">
-                <h2 className="modal-baslik">{_DETAYLIILAN.baslik}</h2>
-                <button 
-                  className="modal-kapat"
-                  onClick={ilanDetayiniKapat}
-                >
-                  ✕
-                </button>
-              </div>
-              <img 
-                src={getImageUrl(_DETAYLIILAN.resim)} 
-                alt={_DETAYLIILAN.baslik} 
-                className="modal-resim" 
-              />
-              <div className="modal-fiyat-tarih">
-                <span className="modal-fiyat">{_DETAYLIILAN.fiyat} TL</span>
-                <span className="modal-tarih">{_DETAYLIILAN.tarih}</span>
-              </div>
-              <div className="modal-detaylar">
-                <div className="modal-detay">
-                  <h3 className="detay-baslik">Konum</h3>
-                  <p className="detay-icerik">{_DETAYLIILAN.lokasyon}</p>
-                </div>
-                <div className="modal-detay">
-                  <h3 className="detay-baslik">Durum</h3>
-                  <p className="detay-icerik">{_DETAYLIILAN.durum}</p>
-                </div>
-                <div className="modal-detay">
-                  <h3 className="detay-baslik">Kategori</h3>
-                  <p className="detay-icerik">{_DETAYLIILAN.kategori}</p>
-                </div>
-              </div>
-              <div className="modal-aciklama">
-                <h3 className="detay-baslik">Açıklama</h3>
-                <p className="detay-icerik">{_DETAYLIILAN.aciklama}</p>
-              </div>
-              <div className="modal-butonlar">
-                <button className="favori-buton">
-                  ♥ Favorilere Ekle
-                </button>
-                <button className="mesaj-buton">
-                  ✉ Mesaj Gönder
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        
       </div>
     </>
   );
