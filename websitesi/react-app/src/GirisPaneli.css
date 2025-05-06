@@ -1,4 +1,4 @@
-/* GirisPaneli.css */
+/* GirisPaneli.css - Buzlu Cam Efekti ile Güncellendi */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,61 +9,136 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: #f5f9f5;
   color: #333;
+  height: 100vh;
+  overflow: hidden;
 }
 
+/* Arkaplan stilini ekleyelim */
 .giris-konteyner {
   display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background-color: #e8f5e9;
+  position: relative;
+  z-index: 1;
 }
 
+/* Arkaplan gradiyenti ve desenler */
+.giris-konteyner::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #43a047, #1a237e);
+  background-size: cover;
+  z-index: -2;
+}
+
+/* Arkaplan desenlerini ekleyelim */
+.giris-konteyner::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.05)' fill-rule='evenodd'/%3E%3C/svg%3E");
+  z-index: -1;
+  opacity: 0.8;
+}
+
+/* Buzlu cam efekti için giriş kartı */
 .giris-kart {
   width: 100%;
   max-width: 400px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 120, 60, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.8s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.giris-kart:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Ortam ışığı efekti */
+.giris-kart::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+  transform: rotate(0deg);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.7s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.giris-kart:hover::before {
+  opacity: 1;
+  transform: rotate(15deg);
 }
 
 .giris-baslik {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
+  position: relative;
 }
 
 .giris-baslik h1 {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
-  color: #2e7d32;
-  margin-bottom: 8px;
+  color: #ffffff;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
 }
 
 .giris-baslik p {
-  color: #66bb6a;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
 }
 
 .basarili-mesaj {
   display: flex;
   align-items: center;
-  background-color: #fdf7f8;
-  color: #89e280;
-  padding: 12px;
-  border-radius: 6px;
+  background-color: rgba(137, 226, 128, 0.2);
+  color: #ffffff;
+  padding: 14px;
+  border-radius: 8px;
   margin-bottom: 20px;
+  border-left: 4px solid #89e280;
+  backdrop-filter: blur(5px);
+  animation: slideIn 0.5s ease-out;
 }
 
 .hata-mesaji {
   display: flex;
   align-items: center;
-  background-color: #ffebee;
-  color: #c62828;
-  padding: 12px;
-  border-radius: 6px;
+  background-color: rgba(198, 40, 40, 0.2);
+  color: #ffffff;
+  padding: 14px;
+  border-radius: 8px;
   margin-bottom: 20px;
+  border-left: 4px solid #c62828;
+  backdrop-filter: blur(5px);
+  animation: slideIn 0.5s ease-out;
 }
 
 .hata-ikonu {
@@ -71,15 +146,19 @@ body {
 }
 
 .form-grup {
-  margin-bottom: 22px;
+  margin-bottom: 24px;
+  position: relative;
 }
 
 .form-grup label {
   display: block;
   margin-bottom: 8px;
   font-size: 14px;
-  font-weight: 500;
-  color: #388e3c;
+  font-weight: 600;
+  color: #ffffff !important; /* Beyaz renk - önemli */
+  transition: color 0.3s ease;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Daha güçlü gölge */
 }
 
 .etiket-satiri {
@@ -88,19 +167,26 @@ body {
   align-items: center;
 }
 
+.etiket-satiri label {
+  color: #ffffff !important; /* Beyaz renk - önemli */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Gölgeyi arttırdım */
+}
+
 .sifremi-unuttum {
   background: none;
   border: none;
-  color: #43a047;
+  color: rgba(255, 255, 255, 1); /* Tam beyaz renk */
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Daha belirgin gölge */
 }
 
 .sifremi-unuttum:hover {
-  color: #2e7d32;
+  color: #ffffff;
   text-decoration: underline;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 .girdi-kapsayici {
@@ -111,98 +197,139 @@ body {
 
 .girdi-ikonu {
   position: absolute;
-  left: 12px;
-  color: #81c784;
+  left: 14px;
+  color: rgba(0, 0, 0, 0.6); /* Siyaha yakın renk */
+  transition: color 0.3s ease;
+  z-index: 2;
 }
 
 .girdi-kapsayici input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #c8e6c9;
-  border-radius: 6px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
   font-size: 16px;
-  transition: all 0.2s ease-in-out;
-  background-color: #f9fff9;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8); /* Daha açık, beyaza yakın arkaplan */
+  color: #000000; /* Siyah yazı rengi */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.girdi-kapsayici input::placeholder {
+  color: rgba(0, 0, 0, 0.5); /* Daha koyu placeholder rengi */
 }
 
 .girdi-kapsayici input.sifre-girdisi {
-  padding-right: 70px; /* Göster/Gizle butonu için yer açıyoruz */
+  padding-right: 80px; /* Göster/Gizle butonu için yer açıyoruz */
 }
 
 .girdi-kapsayici input:not(.sifre-girdisi) {
-  padding-left: 36px; /* E-posta alanı için ikonun yanında başlasın */
+  padding-left: 40px; /* E-posta alanı için ikonun yanında başlasın */
 }
 
 .girdi-kapsayici input:focus {
   outline: none;
-  border-color: #66bb6a;
-  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
-  background-color: #ffffff;
+  border-color: rgba(67, 160, 71, 0.8); /* Yeşil border */
+  box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.25);
+  background-color: rgba(255, 255, 255, 0.95); /* Daha beyaz arkaplan */
+}
+
+.girdi-kapsayici:focus-within .girdi-ikonu {
+  color: rgba(67, 160, 71, 1); /* Odaklanıldığında yeşil ikon */
 }
 
 .sifre-goster {
   position: absolute;
   right: 12px;
-  background-color: #e8f5e9;
+  background-color: rgba(255, 255, 255, 0.1);
   border: none;
-  color: #388e3c;
-  padding: 5px 10px;
-  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 5px 12px;
+  border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .sifre-goster:hover {
-  background-color: #c8e6c9;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 
 .onay-grup {
   display: flex;
   align-items: center;
+  margin-bottom: 24px;
 }
 
 .onay-grup input {
   width: 18px;
   height: 18px;
   margin-right: 10px;
-  accent-color: #43a047; /* Modern tarayıcılarda checkbox rengi */
+  accent-color: #4caf50;
+  cursor: pointer;
 }
 
 .onay-grup label {
   margin-bottom: 0;
   display: inline;
-  color: #616161;
+  color: #ffffff !important; /* Beyaz renk - önemli */
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Daha güçlü gölge */
 }
 
 .giris-buton {
   width: 100%;
   padding: 14px;
-  background-color: #43a047;
+  background: linear-gradient(135deg, #43a047, #2e7d32);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.giris-buton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.giris-buton:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 .giris-buton:hover:not(:disabled) {
-  background-color: #2e7d32;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
 }
 
 .giris-buton:active:not(:disabled) {
   transform: translateY(1px);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .giris-buton:disabled {
-  background-color: #a5d6a7;
+  background: linear-gradient(135deg, rgba(67, 160, 71, 0.6), rgba(46, 125, 50, 0.6));
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -226,7 +353,7 @@ body {
 
 @keyframes spin {
   to {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
@@ -234,31 +361,85 @@ body {
   margin-top: 28px;
   text-align: center;
   font-size: 15px;
-  color: #757575;
+  color: rgba(255, 255, 255, 0.9); /* Daha belirgin metin rengi */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Okunurluğu artırmak için gölge */
 }
 
 .kayit-link button {
   background: none;
   border: none;
-  color: #43a047;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 4px 8px;
 }
 
 .kayit-link button:hover {
-  color: #2e7d32;
-  text-decoration: underline;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.kayit-link button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.kayit-link button:hover::after {
+  width: 100%;
+}
+
+/* Animasyonlar */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Mobil cihazlar için ek düzenlemeler */
 @media (max-width: 480px) {
   .giris-kart {
-      padding: 24px;
+    padding: 24px;
+    margin: 0 15px;
+  }
+  
+  .giris-baslik h1 {
+    font-size: 26px;
+  }
+  
+  .giris-baslik p {
+    font-size: 14px;
   }
   
   .sifre-goster {
-      font-size: 11px;
-      padding: 4px 8px;
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  
+  .giris-buton {
+    padding: 12px;
   }
 }
