@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import './ilanArayuzu.css';
 
 //-----------------------------------JAVASCRIPT KODU BASLANGIC------------------------------------------------
 
 function IlanArayuzu() {
-  const ilanid = 1; // URL parametresi yerine sabit bir değer kullanıldı
+  const { ilanid } = useParams(); ;// useParams ile URL icindeki ilanid'si cekilir
   const [_ILAN, fIlan] = useState(null);
-  const [loading, yuklenmeDurumunuAyarla] = useState(true);
-  const [error, setError] = useState(null);
-  const [activeTab, sekmeAyarla] = useState('yorumlar'); // Default active tab is now 'yorumlar'
+  const [yukleme, yuklenmeDurumunuAyarla] = useState(true);
+  const [hata,hatabelirleme] = useState(null);
+  const [aktifSekme, sekmeAyarla] = useState('yorumlar'); // Default active tab is now 'yorumlar'
 
   // URL'DE KAYITLI OLAN ID'YE GORE VERITABANINDA HEDEF ILAN BULUNUR
   useEffect(() => { 
@@ -26,7 +27,7 @@ function IlanArayuzu() {
         });
 
         if (!yanit.ok) {
-          throw new Error('API yanıtı başarısız oldu');
+          throw new hata('API yanıtı başarısız oldu');
         }
 
         const hamVeri = await yanit.text();
@@ -36,9 +37,9 @@ function IlanArayuzu() {
         console.log('Dönüştürülen veri:', data);
 
         fIlan(data);
-      } catch (error) {
-        console.error('Veri alınırken bir hata oluştu', error);
-        setError('İlan bilgisi yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
+      } catch (hata) {
+        console.hata('Veri alınırken bir hata oluştu', hata);
+       hatabelirleme('İlan bilgisi yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
       } finally {
         yuklenmeDurumunuAyarla(false);
       }
@@ -63,9 +64,9 @@ function IlanArayuzu() {
     alert('Teklifiniz iletildi!');
   };
 
-  if (loading) return <div className="loading">Yükleniyor...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (!_ILAN || _ILAN.length === 0) return <div className="error">İlan bulunamadı.</div>;
+  if (yukleme) return <div className="yukleme">Yükleniyor...</div>;
+  if (hata) return <div className="hata">{hata}</div>;
+  if (!_ILAN || _ILAN.length === 0) return <div className="hata">İlan bulunamadı.</div>;
 
   const ilan = _ILAN[0]; // İlk ilanı al
 
@@ -128,7 +129,7 @@ return (
 
       <div className="ilan-tabs">
         <div 
-          className={`tab ${activeTab === 'yorumlar' ? 'active' : ''}`}
+          className={`tab ${aktifSekme === 'yorumlar' ? 'active' : ''}`}
           onClick={() => sekmeDegistir('yorumlar')}
         >
           Kullanıcı Yorumları
