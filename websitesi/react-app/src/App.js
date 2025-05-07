@@ -4,7 +4,8 @@ import AnaSayfa from './AnaSayfa';
 import GirisPaneli from './GirisPaneli';
 import KayitPaneli from './KayitPaneli';
 import IlanOlusturma from './ilanolusturma';
-
+import Profil from './ProfilSayfa'; // Profil sayfasının doğru yolu
+import KullaniciProfil from './KullaniciProfil';
 import IlanArayuzu from './IlanArayuzu';
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
         <Route path="/kayit" element={<KayitPaneli />} />
         <Route path="/ilanolustur" element={<IlanOlusturma/>} />
         <Route path="/ilanlar/:ilanid/:baslik" element={<IlanArayuzu />} />
+        <Route path="/profil" element={<Profil />} /> {/* Profil sayfası */}
+        <Route path="/kullaniciprofil" element={<KullaniciProfil />} /> 
       </Routes>
     </Router>
   );
