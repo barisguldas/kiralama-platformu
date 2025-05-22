@@ -1,13 +1,10 @@
 /* UstCubuk.css - Modern Tasarım */
 .ust-cubuk {
-  background-color: #ffffff;
-  background-size: 1920px 80px; /* Standart masaüstü boyutu */
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 80px; /* Sabit yükseklik */
+  background-image: url('C:\Users\Barış\Desktop\ustcubuk3.png');
+  height: 80px;
   padding: 0 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
   width: 100%;
@@ -25,14 +22,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
+  max-width: 1750px;
   margin: 0 auto;
-  gap: 30px;
+  width: 100%;
+  gap: 20px;
+}
+
+/* Site Logo */
+.site-logo {
+  margin-right: auto;
 }
 
 .site-logo a {
   text-decoration: none;
-  color: #0078d7; /* Modern mavi tonu */
+  color: #0078d7;
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: -0.5px;
@@ -49,13 +52,14 @@
 .arama-konteyner-ust {
   display: flex;
   align-items: center;
-  background-color: #f7f9fa; /* Daha açık ve modern gri */
+  background-color: #f7f9fa;
   border-radius: 12px;
-  padding: 0 16px;
+  padding: 0 15px;
   flex-grow: 1;
-  max-width: 600px;
+  max-width: 450px;
   border: 1px solid rgba(0, 0, 0, 0.07);
   transition: all 0.2s ease;
+  margin: 0 auto 0 0;
 }
 
 .arama-konteyner-ust:focus-within {
@@ -89,134 +93,417 @@
   font-weight: 400;
 }
 
+/* Sağ Menü */
 .sag-menu-ogeleri {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px; /* Gap'i azalttık */
+  position: relative; /* Konumlandırma için */
 }
 
-/* Olası sağ menü butonları için */
-.sag-menu-buton {
+/* Bildirim Konteyneri */
+.bildirim-container {
+  position: absolute; /* absolute yerine relative */
+  transform: translateX(-100px)
+
+  
+}
+
+/* Bildirim İkonu */
+.bildirim-icon {
+  position: relative;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  font-size: 1.3rem;
+  color: #555;
+  background-color: rgba(0, 0, 0, 0.05);
+  
+}
+
+.bildirim-icon:hover {
+  background-color: rgba(0, 120, 215, 0.1);
+  color: #0078d7;
+  transform: scale(1.05);
+}
+
+.bildirim-sayaci {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #dc3545;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Bildirim Dropdown */
+.bildirim-dropdown {
+  position: absolute;
+  right: 0;
+  top: 55px;
+  background: white;
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  border: 1px solid #dee2e6;
+  z-index: 101;
+}
+
+.bildirim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #dee2e6;
+  background: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+
+.bildirim-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #212529;
+}
+
+.kapat-btn {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #6c757d;
   background: none;
   border: none;
-  cursor: pointer;
-  color: #555;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.kapat-btn:hover {
+  color: #495057;
+}
+
+.bildirim-listesi {
+  padding: 8px 0;
+}
+
+.bildirim-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding: 12px 16px;
+  margin: 4px 8px;
+  border-radius: 6px;
+  background: #f9f9fa;
+  transition: background 0.2s ease;
+  gap: 10px;
+}
+
+.bildirim-item.okunmamis {
+  background: #e7f5ff;
+  border-left: 3px solid #228be6;
+}
+
+.bildirim-item:hover {
+  background: #dadada;
+}
+
+.bildirim-ikon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.bildirim-icerik {
+  flex: 1;
+}
+
+.bildirim-mesaj {
+  font-size: 0.9rem;
+  color: #212529;
+  margin-bottom: 4px;
+}
+
+.bildirim-tarih {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.bildirim-yukleniyor,
+.bos-bildirim {
+  text-align: center;
+  padding: 20px;
+  color: #6c757d;
+}
+
+.bildirim-footer {
+  display: flex;
   justify-content: center;
-  transition: all 0.2s ease;
+  padding: 8px;
+  border-top: 1px solid #dee2e6;
 }
 
-.sag-menu-buton:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #0078d7;
-}
-
-/* Kullanıcı profil butonu */
-.kullanici-butonu {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 24px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #f7f9fa;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.kullanici-butonu:hover {
-  background-color: #f0f2f5;
-  border-color: rgba(0, 0, 0, 0.15);
-}
-
-.kullanici-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: #0078d7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.tumunu-okundu-btn {
+  background: #6c757d;
   color: white;
-  font-weight: 600;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
   font-size: 0.8rem;
+  transition: background 0.2s ease;
 }
 
-/* Mobil cihazlar için küçük ayarlamalar */
+.tumunu-okundu-btn:hover {
+  background: #5a6268;
+}
+
+/* Teklif İşlemleri */
+.teklif-actions {
+  margin-top: 10px;
+}
+
+.teklif-butonlar {
+  display: flex;
+  gap: 10px;
+}
+
+.onayla-btn {
+  background: #28a745;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+}
+
+.onayla-btn:hover {
+  background: #218838;
+}
+
+.reddet-btn {
+  background: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+}
+
+.reddet-btn:hover {
+  background: #c82333;
+}
+
+.teklif-durum {
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.teklif-durum.onaylandı {
+  background: #d4edda;
+  color: #155724;
+}
+
+.teklif-durum.reddedildi {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Profil Konteyneri */
+.profil-container {
+  background-color: #005fa3;
+  order: 2; /* Bildirimden sonra gelsin */
+  transform: translateX(-50px); /* Profil butonunu sola kaydır */
+}
+
+.profil-ikon {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.profil-resim-container {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #0078d7;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  background-color: #005fa3;
+}
+
+.profil-resim-container:hover {
+  transform: scale(1.05);
+  border-color: #005fa3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.profil-resim {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Profil Dropdown Menü */
+.profil-dropdown {
+  position: absolute;
+  right: 0;
+  top: 55px;
+  background: white;
+  width: 240px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  border: 1px solid #dee2e6;
+  z-index: 101;
+  overflow: hidden;
+}
+
+.profil-menu-listesi {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profil-menu-item {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+.profil-menu-item a,
+.profil-menu-item.cikis-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #212529;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.profil-menu-item a:hover,
+.profil-menu-item.cikis-item:hover {
+  background-color: #f8f9fa;
+}
+
+.profil-menu-ikon {
+  margin-right: 12px;
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.profil-menu-ayrac {
+  height: 1px;
+  background-color: #dee2e6;
+  margin: 6px 0;
+}
+
+/* Mobil Uyumlu Tasarım */
 @media (max-width: 768px) {
   .ust-cubuk {
     padding: 0 16px;
-    height: 60px; /* Tablet ve mobil için daha küçük yükseklik */
-    background-size: 768px 60px; /* Tablet boyutu */
+    height: 60px;
   }
   
   .ust-cubuk-icerik {
     gap: 16px;
   }
-  
-  .site-logo {
-    margin-right: auto;
-  }
 
   .arama-konteyner-ust {
-    position: absolute;
-    top: 70px;
-    left: 16px;
-    right: 16px;
-    max-width: calc(100% - 32px);
-    margin: 0 auto;
-    z-index: 99;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
+    max-width: 300px;
+  }
+
+  .sag-menu-ogeleri {
+    gap: 12px;
+  }
+
+  .profil-container {
+    transform: translateX(-20px);
+  }
+
+  .profil-resim-container {
+    width: 36px;
+    height: 36px;
+  }
+
+  .bildirim-icon {
+    width: 36px;
+    height: 36px;
   }
   
-  .arama-konteyner-ust.aktif {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateY(0);
-  }
-  
-  .arama-toggle-buton {
-    display: flex !important;
-  }
-  
-  .kullanici-butonu {
-    padding: 6px;
-  }
-  
-  .kullanici-butonu span {
-    display: none;
+  .bildirim-dropdown,
+  .profil-dropdown {
+    width: 280px;
+    right: -10px;
   }
 }
 
 @media (max-width: 480px) {
   .ust-cubuk {
     padding: 0 12px;
-    height: 56px; /* Küçük mobil cihazlar için en küçük yükseklik */
-    background-size: 480px 56px; /* Mobil boyutu */
+    height: 56px;
   }
+
+  .sag-menu-ogeleri {
+    gap: 10px;
+  }
+
+  .profil-container {
+    transform: translateX(-10px);
+  }
+
+  .bildirim-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    transition: all 0.3s ease;
   
+  }
+
   .site-logo a {
     font-size: 1.2rem;
   }
-  
-  .sag-menu-ogeleri {
-    gap: 8px;
-  }
-  
-  .sag-menu-buton {
-    width: 36px;
-    height: 36px;
-  }
-}
 
-.ust-cubuk {
-  background-image: url('C:\Users\Barış\Desktop\ustcubuk2.png');
+  .arama-konteyner-ust {
+    max-width: 200px;
+  }
+
+  .profil-resim-container {
+    width: 34px;
+    height: 34px;
+    border-width: 1.5px;
+  }
+
+  .bildirim-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .bildirim-dropdown,
+  .profil-dropdown {
+    width: 260px;
+    max-width: calc(100vw - 20px);
+    right: -15px;
+  }
 }
