@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import './AnaSayfa.css';
 import UstCubuk from './UstCubuk';
-import { Link } from 'react-router-dom';
-
+import { Link,useNavigate } from 'react-router-dom';
 const placeholderImage = "https://via.placeholder.com/300x200?text=Ürün+Görseli";
 
 const kategoriler = [
@@ -29,10 +28,31 @@ const AnaSayfa = () => {
   const [_ILANLAR, fIlanlar] = useState([]);
   const [sayfaBasiIlanSayisi, setSayfaBasiIlanSayisi] = useState(20);
   const [aktifSayfa, setAktifSayfa] = useState(1);
-
+ const [_KULLANICIID, fKullaniciId] = useState(null);
+  const navigate = useNavigate();
+  
+  const cikisYap = () => {
+    localStorage.removeItem('token');  // Tokeni sil
+    navigate('/giris');
+  };
 
 //------------Başlangıçta ilanları çekebilmek için (Backend)---------
   useEffect(() => { 
+
+     const tokenKontrol = async() =>{
+const token = localStorage.getItem('token');
+if (token) {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    fKullaniciId(payload.kullaniciid);
+  } catch (error) {
+    console.error('Token parsing error:', error);
+    // Token bozuksa temizleyebilirsin
+    localStorage.removeItem('token');
+  }
+}
+    }; tokenKontrol();
+
       const ilanlari_cek = async () => {
         try {
           const params = new URLSearchParams();
@@ -241,7 +261,7 @@ const AnaSayfa = () => {
 //-----------------------JSX BLOGU BASLANGIC--------------------------------------------------------------------------------------------------------
   return (
     <>
-      <UstCubuk _ARAMAMETNI={_ARAMAMETNI} onAramaChange={handleAramaChange} />
+      <UstCubuk _ARAMAMETNI={_ARAMAMETNI} onAramaChange={handleAramaChange} kullaniciId={_KULLANICIID}/>
       <div className="page-wrapper">
         <aside className={`kategori-sidebar ${_SIDEBARACIK ? 'acik' : ''}`}>
           <h2 className="sidebar-baslik">Kategoriler</h2>
@@ -331,7 +351,7 @@ const AnaSayfa = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="ilan-kategori">🏷️ Kategori: {ilan.kategori}</div>
+                    
                     <p className="ilan-aciklama">{ilan.aciklama}</p>
                     <div className="ilan-alt-bilgiler">
                       <div className="ilan-favori">
@@ -402,11 +422,39 @@ const AnaSayfa = () => {
             </div>
           )}
         </div>
-
+                                     
         
       </div>
+<footer className="site-footer">
+      <div className="footer-container">
+        <div className="footer-section">
+          <h3>Hakkımızda</h3>
+          <p>İkinci el eşya alım satım platformu olarak hizmet vermekteyiz.</p>
+        </div>
+        <div className="footer-section">
+          <h3>Hızlı Linkler</h3>
+          <ul>
+            <li><Link to="/">Ana Sayfa</Link></li>
+            <li><Link to="/ilan-ver">İlan Ver</Link></li>
+            <li><Link to="/sss">SSS</Link></li>
+            <li><Link to="/iletisim">İletişim</Link></li>
+          </ul>
+        </div>
+        <div className="footer-section">
+          <h3>İletişim</h3>
+          <p>Email: info@ikinciel.com</p>
+          <p>Telefon: 0 (123) 456 78 90</p>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <p>&copy; {new Date().getFullYear()} İkinci El Eşya Platformu. Tüm hakları saklıdır.</p>
+      </div>
+    </footer>
+      
     </>
+    
   );
 };
+
 //-----------------------JSX BLOGU BITIS------------------------------------------------------------------------------------------------------------
 export default AnaSayfa;
